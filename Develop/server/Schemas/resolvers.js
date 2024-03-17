@@ -24,7 +24,7 @@ const resolvers = {
   },
   Mutation: {
     // Resolver to create a new user
-    createUser: async (_, { userInput }, context) => {
+    addUser: async (_, { userInput }, context) => {
       const user = await User.create(userInput);
       if (!user) {
         throw new Error("Something is wrong!");
@@ -60,7 +60,7 @@ const resolvers = {
       }
     },
     // Resolver to delete a book from the user's savedBooks array
-    deleteBook: async (_, { bookId }, context) => {
+    removeBook: async (_, { bookId }, context) => {
       const { user } = context;
       const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
