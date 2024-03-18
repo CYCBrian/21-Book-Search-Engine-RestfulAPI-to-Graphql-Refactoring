@@ -14,6 +14,7 @@ const SignupForm = () => {
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
+  // Use the useMutation hook to handle the LOGIN_USER mutation
   const [addUser, { error, data}] = useMutation(ADD_USER)
 
   const handleInputChange = (event) => {
@@ -41,9 +42,13 @@ const SignupForm = () => {
       // const { token, user } = await response.json();
       // console.log(user);
       // Auth.login(token);
+
+      // Perform login mutation with userFormData
       const {data} = await addUser({
         variables:{...userFormData},
       })
+
+      // If login is successful, store the token in local storage
       Auth.login(data.addUser.token)
     } catch (err) {
       console.error(err);
