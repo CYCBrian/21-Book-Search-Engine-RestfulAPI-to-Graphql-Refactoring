@@ -1,5 +1,5 @@
 // Import necessary modules
-const { GraphQlError } = require("graphql");
+const { GraphQLError  } = require("graphql");
 const jwt = require("jsonwebtoken");
 
 // Set token secret and expiration date
@@ -8,14 +8,14 @@ const expiration = "2h";
 
 module.exports = {
   //Handle Authentication Error
-  AuthenticationError: new GraphQlError("Could not authenticate user.", {
+  AuthenticationError: new GraphQLError ("Could not authenticate user.", {
     extensions: {
       code: "UNAUTHENTICATED",
     },
   }),
 
   // Middleware function for authentication
-  authMiddleware: function ({ req }) {
+  authMiddleware: function ({ req, res, next }) {
     // Allow token to be sent via req.query or headers
     let token = req.body.token || req.query.token || req.headers.authorization;
 
@@ -27,7 +27,8 @@ module.exports = {
 
     // Check if token exists
     if (!token) {
-      return res.status(400).json({ message: "You have no token!" });
+      // return res.status(400).json({ message: "You have no token!" });
+      return next(new Error("You have no token!"))
     }
 
     // Verify token and get user data out of it
