@@ -6,6 +6,14 @@ const typeDefs = `
         login(email: String!, password: String!):Auth
         addUser(username:String!, email:String!, password: String):Auth
         saveBook(input: bookInput):User
+        input BookInput {
+            authors: [String]
+            description: String!
+            bookId: String!
+            image: String
+            link: String
+            title: String!
+          }
         removeBook(bookId:String!):User
     }
     type User{
