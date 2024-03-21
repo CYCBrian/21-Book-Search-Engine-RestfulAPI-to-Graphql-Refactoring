@@ -4,15 +4,15 @@ const { signToken, AuthenticationError } = require("../utils/auth");
 const resolvers = {
   Query: {
     // Resolver to get a single user by ID or username
-    getSingleUser: async (_, { id, username }, context) => {
-      const foundUser = await User.findOne({
-        $or: [{ _id: id }, { username: username }].populate('books'),
-      });
-      if (!foundUser) {
-        throw new Error("Cannot find a user with this id!");
-      }
-      return foundUser;
-    },
+    // getSingleUser: async (_, { id, username }, context) => {
+    //   const foundUser = await User.findOne({
+    //     $or: [{ _id: id }, { username: username }].populate('books'),
+    //   });
+    //   if (!foundUser) {
+    //     throw new Error("Cannot find a user with this id!");
+    //   }
+    //   return foundUser;
+    // },
     me:async(_, args, context)=>{
         if(context.user){
             return await User.findOne({
@@ -24,14 +24,16 @@ const resolvers = {
   },
   Mutation: {
     // Resolver to create a new user
-    addUser: async (_, { userInput }, context) => {
-      const user = await User.create(userInput);
-      if (!user) {
-        throw new Error("Something is wrong!");
-      }
-      const token = signToken(user);
-      return { token, user };
-    },
+    // either define userInput or straight use the variables 
+addUser: async (_, { userFormData }, context) => {
+  const { username, email, password } = userFormData;
+  const user = await User.create({ username, email, password });
+  if (!user) {
+    throw new Error("Something went wrong!");
+  }
+  const token = signToken(user);
+  return { token, user };
+},
     // Resolver for user login
     login: async (_, { username, email, password }, context) => {
       const user = await User.findOne({ $or: [{ username }, { email }] });

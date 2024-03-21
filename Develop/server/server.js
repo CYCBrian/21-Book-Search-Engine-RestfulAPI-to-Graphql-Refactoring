@@ -1,7 +1,7 @@
 // Import necessary modules and dependencies
 const express = require("express");
 const { ApolloServer } = require("@apollo/server");
-const { expressMiddleWare } = require("@apollo/server/express4");
+const { expressMiddleware } = require("@apollo/server/express4");
 const path = require("path");
 const { authMiddleWare } = require("./utils/auth");
 const db = require("./config/connection");
@@ -28,9 +28,8 @@ const startApolloServer = async () => {
 
   // Set up the GraphQL endpoint with authentication middleware
   app.use(
-    "/graphql",
-    expressMiddleWare(server, {
-      context: authMiddleWare,
+    "/graphql", expressMiddleware(server,{
+      context: authMiddleWare
     })
   );
 
