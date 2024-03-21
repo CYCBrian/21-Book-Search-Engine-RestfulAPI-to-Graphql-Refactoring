@@ -15,7 +15,7 @@ const SignupForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   // Use the useMutation hook to handle the LOGIN_USER mutation
-  const [addUser, { error, data}] = useMutation(ADD_USER)
+  const [addUser, { error }] = useMutation(ADD_USER)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

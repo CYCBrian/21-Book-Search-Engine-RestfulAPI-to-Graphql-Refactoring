@@ -15,7 +15,7 @@ module.exports = {
   }),
 
   // Middleware function for authentication
-  authMiddleware: function ({ req, res, next }) {
+  authMiddleware: function ({ req}) {
     // Allow token to be sent via req.query or headers
     let token = req.body.token || req.query.token || req.headers.authorization;
 
@@ -28,7 +28,7 @@ module.exports = {
     // Check if token exists
     if (!token) {
       // return res.status(400).json({ message: "You have no token!" });
-      return next(new Error("You have no token!"))
+      return req;
     }
 
     // Verify token and get user data out of it
@@ -37,12 +37,12 @@ module.exports = {
       req.user = data;
     } catch {
       console.log("Invalid token");
-      return res.status(400).json({ message: "invalid token!" });
+      
     }
 
     // Proceed to next endpoint
-    next();
-    // return req
+ 
+    return req
   },
 
   // Function to sign a JWT token
