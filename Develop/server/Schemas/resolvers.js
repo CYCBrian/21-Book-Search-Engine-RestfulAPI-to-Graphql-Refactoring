@@ -25,7 +25,8 @@ const resolvers = {
   Mutation: {
     // Resolver to create a new user
     // either define userInput or straight use the variables 
-addUser: async (_, { username, email, password }, context) => {
+addUser: async (_, { userFormData }, context) => {
+  const { username, email, password } = userFormData;
   const user = await User.create({ username, email, password });
   if (!user) {
     throw new Error("Something went wrong!");

@@ -32,10 +32,16 @@ const typeDefs = `
     type Query{
         me: User
     }
+
+    input userFormData{
+        username: String!
+        email: String!
+        password: String!
+    }
     
     type Mutation{
         login(email: String!, password: String!):Auth
-        addUser(username:String!, email:String!, password: String!):Auth
+        addUser(input: userFormData):Auth
         saveBook(input: BookInput):User
         removeBook(bookId:String!):User
     }
